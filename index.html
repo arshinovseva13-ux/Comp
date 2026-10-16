@@ -1,726 +1,80 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Компилятор HTML/CSS/JS - Интегрированная песочница</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            background: linear-gradient(145deg, #1a1e2c 0%, #2a2f3f 100%);
-            font-family: 'Segoe UI', 'Fira Code', 'Monaco', monospace;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            overflow: hidden;
-        }
-
-        /* Главный контейнер */
-        .app {
-            width: 1400px;
-            max-width: 98vw;
-            height: 95vh;
-            background: #0f1219;
-            border-radius: 32px;
-            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255,255,255,0.05);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            backdrop-filter: blur(2px);
-        }
-
-        /* Верхняя панель с кнопками */
-        .toolbar {
-            background: #1e2438;
-            padding: 12px 20px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            border-bottom: 1px solid #2e3a55;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .tabs {
-            display: flex;
-            gap: 8px;
-            background: #0b0e16;
-            padding: 4px;
-            border-radius: 60px;
-        }
-
-        .tab-btn {
-            background: transparent;
-            border: none;
-            color: #a9b7e6;
-            font-weight: 600;
-            font-family: inherit;
-            padding: 8px 20px;
-            border-radius: 40px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            transition: 0.2s;
-            letter-spacing: 0.5px;
-        }
-
-        .tab-btn.active {
-            background: #4c7cf3;
-            color: white;
-            box-shadow: 0 4px 12px rgba(76, 124, 243, 0.4);
-        }
-
-        .action-group {
-            display: flex;
-            gap: 12px;
-        }
-
-        .btn {
-            background: #2a3448;
-            border: none;
-            padding: 8px 18px;
-            border-radius: 40px;
-            font-family: inherit;
-            font-weight: bold;
-            color: #e2e8ff;
-            cursor: pointer;
-            font-size: 0.8rem;
-            transition: 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-primary {
-            background: #3b5fcf;
-            color: white;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-        }
-
-        .btn-primary:hover {
-            background: #5b7ef0;
-            transform: scale(0.98);
-        }
-
-        .btn:hover {
-            background: #3e4a66;
-        }
-
-        /* Основная область: редакторы + превью */
-        .workspace {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-            padding: 12px;
-            gap: 14px;
-            background: #0c0f17;
-        }
-
-        /* Панель редакторов */
-        .editor-panel {
-            flex: 1.2;
-            background: #141a27;
-            border-radius: 24px;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-            border: 1px solid #2c3548;
-        }
-
-        .editor-header {
-            background: #1b212f;
-            padding: 12px 18px;
-            font-weight: bold;
-            color: #b9c7f0;
-            border-bottom: 1px solid #2e3a4e;
-            font-size: 0.85rem;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .code-area {
-            flex: 1;
-            width: 100%;
-            background: #0f131e;
-            color: #e4f0ff;
-            border: none;
-            font-family: 'Fira Code', 'Cascadia Code', monospace;
-            font-size: 13px;
-            line-height: 1.5;
-            padding: 18px;
-            resize: none;
-            outline: none;
-            tab-size: 4;
-        }
-
-        /* Панель предпросмотра */
-        .preview-panel {
-            flex: 1;
-            background: #ffffff;
-            border-radius: 24px;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-            border: 1px solid #2c3548;
-        }
-
-        .preview-header {
-            background: #eef2ff;
-            padding: 10px 16px;
-            font-weight: bold;
-            color: #1e2a3a;
-            border-bottom: 1px solid #cbd5e6;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        iframe {
-            width: 100%;
-            flex: 1;
-            border: none;
-            background: white;
-        }
-
-        /* статус */
-        .status-msg {
-            font-size: 0.7rem;
-            color: #6f7c9e;
-            margin-left: 8px;
-        }
-
-        @media (max-width: 800px) {
-            .workspace {
-                flex-direction: column;
-            }
-            .toolbar {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .tabs, .action-group {
-                justify-content: center;
-            }
-        }
-    </style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#101116">
+<title>Orbit Git — твой код, твоя история</title>
+<style>
+:root{color-scheme:dark;--bg:#101116;--side:#15161d;--panel:#1b1c25;--line:#30313d;--text:#f1f2f8;--muted:#999bac;--accent:#9b87ff;--green:#55d6a2;--red:#ff777f}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 Inter,system-ui,-apple-system,Segoe UI,sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer}.app{min-height:100vh;display:grid;grid-template-columns:250px minmax(0,1fr)}aside{background:var(--side);border-right:1px solid var(--line);padding:20px 14px;display:flex;flex-direction:column;gap:24px}.brand{display:flex;align-items:center;gap:11px;padding:0 7px}.mark{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#a28cff,#54dfd0);display:grid;place-items:center;color:#151520;font-weight:900;font-size:22px}.brand b{font-size:18px;letter-spacing:-.5px}.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:2px}.section-label{color:#747789;font-size:10px;font-weight:800;letter-spacing:1.8px;padding:0 10px;margin-bottom:5px}.nav{display:grid;gap:4px}.nav button{display:flex;gap:11px;align-items:center;width:100%;padding:11px 12px;text-align:left;background:transparent;color:var(--muted);border:0;border-radius:10px}.nav button.active,.nav button:hover{background:#8e7aff1c;color:var(--text)}.nav .ico{width:20px;text-align:center;font-size:17px}.aside-bottom{margin-top:auto;border:1px solid var(--line);border-radius:13px;padding:13px;color:var(--muted);font-size:12px}.aside-bottom b{color:var(--text);display:block;margin-bottom:4px}main{min-width:0}.top{height:66px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;padding:0 clamp(14px,3vw,34px)}.crumb{color:var(--muted)}.top-right{margin-left:auto;display:flex;gap:8px}.btn{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:9px;padding:9px 12px}.btn.primary{background:var(--accent);color:#171323;border-color:transparent;font-weight:750}.btn:disabled{opacity:.4;cursor:not-allowed}.content{padding:clamp(18px,3vw,34px);max-width:1500px;margin:auto}.view{display:none}.view.active{display:block}.heading{display:flex;align-items:flex-start;gap:14px;margin-bottom:24px}.heading h1{font-size:clamp(25px,4vw,34px);letter-spacing:-1px;margin:0 0 5px}.heading p{margin:0;color:var(--muted)}.heading .actions{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}.hero{border:1px solid #5c4da0;background:radial-gradient(ellipse at 90% 10%,#5a478c44,transparent 45%),linear-gradient(125deg,#201e31,#191a23);padding:clamp(22px,4vw,42px);border-radius:20px;margin-bottom:20px}.eyebrow{color:#b8aaff;font-size:11px;font-weight:800;letter-spacing:2px}.hero h2{font-size:clamp(31px,5vw,50px);letter-spacing:-1.8px;line-height:1.05;margin:14px 0}.hero p{max-width:600px;color:#c1c1d0;line-height:1.7}.searchrow{display:flex;gap:8px;margin-top:22px;max-width:700px}.field{min-width:0;width:100%;background:#111219;border:1px solid var(--line);border-radius:9px;color:var(--text);padding:12px 13px;outline:none}.field:focus{border-color:var(--accent)}.searchrow .field{flex:1}.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0 26px}.stat,.card{border:1px solid var(--line);background:var(--side);border-radius:14px;padding:18px}.stat small{color:var(--muted)}.stat b{display:block;font-size:27px;margin-top:5px}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.card h3{margin:0 0 8px;font-size:16px}.muted{color:var(--muted)}.repo-list{display:grid;gap:10px}.repo{display:flex;align-items:center;gap:13px;border:1px solid var(--line);background:var(--side);padding:15px;border-radius:13px}.repo-icon{width:40px;height:40px;flex-shrink:0;border-radius:11px;display:grid;place-items:center;background:#8b7cff1c;color:#b4a6ff;font-size:20px}.repo-info{min-width:0;flex:1}.repo-info b{display:block;overflow-wrap:anywhere}.repo-info small{color:var(--muted)}.repo-actions{display:flex;gap:6px}.pill{font-size:11px;color:var(--green);border:1px solid #55d6a244;border-radius:999px;padding:3px 8px}.code-layout{display:grid;grid-template-columns:minmax(200px,280px) minmax(0,1fr);gap:14px}.filelist{border:1px solid var(--line);border-radius:12px;overflow:hidden;align-self:start}.filelist h3{margin:0;padding:13px;background:var(--panel);border-bottom:1px solid var(--line)}.fileitem{display:block;width:100%;text-align:left;padding:11px 13px;background:transparent;color:var(--text);border:0;border-bottom:1px solid #ffffff0b;overflow-wrap:anywhere}.fileitem:hover,.fileitem.active{background:#8b7cff1c}.editor{width:100%;min-height:360px;resize:vertical;background:#111219;border:1px solid var(--line);border-radius:12px;color:#dcdcf4;padding:16px;font:13px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace;tab-size:2}.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px}.toolbar .field{flex:1;min-width:160px}.commit{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}.commit-dot{width:32px;height:32px;display:grid;place-items:center;background:#55d6a21c;border-radius:50%;color:var(--green);flex-shrink:0}.commit b{display:block}.commit small{color:var(--muted)}.empty{padding:34px 16px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:12px}.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#272836;border:1px solid #45465a;color:var(--text);padding:12px 17px;border-radius:12px;z-index:9;box-shadow:0 12px 40px #0008;max-width:90vw}.tag{display:inline-block;color:#b9adff;background:#8b7cff1b;border-radius:6px;padding:2px 7px;font-size:11px}.footer{color:#727588;font-size:12px;margin-top:28px}.mobile-menu{display:none}
+@media(max-width:800px){.app{grid-template-columns:1fr}aside{display:none}.top{height:58px}.mobile-menu{display:inline-block}.grid2{grid-template-columns:1fr}.code-layout{grid-template-columns:1fr}.filelist{max-height:220px;overflow:auto}.stats{gap:8px}.stat{padding:12px}.stat b{font-size:22px}.heading{flex-wrap:wrap}.heading .actions{margin-left:0;width:100%}.repo{align-items:flex-start;flex-wrap:wrap}.repo-actions{width:100%;padding-left:53px}.hero{border-radius:14px}.searchrow{flex-wrap:wrap}.searchrow .btn{width:100%}}
+</style>
 </head>
 <body>
 <div class="app">
-    <div class="toolbar">
-        <div class="tabs">
-            <button class="tab-btn active" data-mode="integrated">🌐 Целостный код</button>
-            <button class="tab-btn" data-mode="html">📄 HTML</button>
-            <button class="tab-btn" data-mode="css">🎨 CSS</button>
-            <button class="tab-btn" data-mode="js">⚡ JavaScript</button>
-        </div>
-        <div class="action-group">
-            <button id="runBtn" class="btn btn-primary">▶ Запустить / Обновить</button>
-            <button id="downloadBtn" class="btn">⬇ Скачать .html</button>
-        </div>
-    </div>
-
-    <div class="workspace">
-        <!-- Панель редактора кода -->
-        <div class="editor-panel">
-            <div class="editor-header">
-                <span id="editorLabel">✍️ Редактор (целостный HTML)</span>
-                <span class="status-msg" id="liveStatus">⚡ готово</span>
-            </div>
-            <textarea id="codeEditor" class="code-area" spellcheck="false"></textarea>
-        </div>
-
-        <!-- Панель результата -->
-        <div class="preview-panel">
-            <div class="preview-header">
-                <span>🔍 Предпросмотр (живой)</span>
-                <span style="font-size: 11px;">🖱 автообновление после запуска</span>
-            </div>
-            <iframe id="previewFrame" title="preview" sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals"></iframe>
-        </div>
-    </div>
+<aside>
+<div class="brand"><div class="mark">G</div><div><b>Orbit Git</b><small>CODE · HISTORY · CONTROL</small></div></div>
+<div><div class="section-label">РАБОЧЕЕ МЕСТО</div><nav class="nav">
+<button class="active" data-view="home"><span class="ico">⌂</span>Обзор</button>
+<button data-view="repositories"><span class="ico">▤</span>Репозитории</button>
+<button data-view="workspace"><span class="ico">⌘</span>Рабочая область</button>
+<button data-view="history"><span class="ico">◷</span>История коммитов</button>
+</nav></div>
+<div><div class="section-label">ИНСТРУМЕНТЫ</div><nav class="nav">
+<button data-view="explore"><span class="ico">⌕</span>Обзор GitHub</button>
+<button data-view="import"><span class="ico">⇧</span>Импорт / экспорт</button>
+<button data-view="about"><span class="ico">ⓘ</span>О проекте</button>
+</nav></div>
+<div class="aside-bottom"><b>Локальная рабочая область</b>Файлы и коммиты сохраняются в этом браузере. Подключение к GitHub для записи требует авторизации.</div>
+</aside>
+<main>
+<div class="top"><button class="btn mobile-menu" id="menuBtn">☰</button><span class="crumb">Orbit Git</span><span class="crumb">/</span><b id="crumbPage">Обзор</b><div class="top-right"><button class="btn" id="exportTop">Экспорт</button><button class="btn primary" id="newRepoTop">＋ Новый репозиторий</button></div></div>
+<div class="content">
+<section class="view active" id="view-home">
+<div class="hero"><div class="eyebrow">ТВОЯ КОДОВАЯ ВСЕЛЕННАЯ</div><h2>Код — это только<br><span style="color:var(--accent)">начало.</span></h2><p>Личная Git-мастерская: создавай проекты, редактируй файлы, фиксируй изменения коммитами и исследуй публичные репозитории GitHub — в одном интерфейсе.</p><div class="searchrow"><input class="field" id="quickRepoName" placeholder="Название нового репозитория, например my-app"><button class="btn primary" id="quickCreate">＋ Создать</button></div></div>
+<div class="stats"><div class="stat"><small>Мои локальные репозитории</small><b id="repoCount">0</b></div><div class="stat"><small>Локальные коммиты</small><b id="commitCount">0</b></div><div class="stat"><small>Файлы в рабочем проекте</small><b id="fileCount">0</b></div></div>
+<div class="grid2"><div class="card"><h3>⌘ Рабочая область</h3><p class="muted">Создавай файлы, редактируй код и сохраняй контрольные точки.</p><button class="btn" data-goto="workspace">Открыть редактор →</button></div><div class="card"><h3>⌕ Исследовать GitHub</h3><p class="muted">Ищи публичные проекты, смотри описания и открывай их страницы.</p><button class="btn" data-goto="explore">Найти репозитории →</button></div></div>
+<div class="footer">Orbit Git — экспериментальная браузерная Git-мастерская. Локальная история не заменяет сервер Git.</div>
+</section>
+<section class="view" id="view-repositories"><div class="heading"><div><h1>Репозитории</h1><p>Твои проекты, сохранённые локально в этом браузере.</p></div><div class="actions"><button class="btn primary" id="newRepo">＋ Новый</button></div></div><div id="repoList" class="repo-list"></div></section>
+<section class="view" id="view-workspace"><div class="heading"><div><h1>Рабочая область</h1><p id="workspaceSubtitle">Файлы проекта и локальные коммиты.</p></div></div><div class="toolbar"><select id="repoSelect" class="field" aria-label="Выбрать репозиторий"></select><button class="btn" id="addFile">＋ Файл</button><button class="btn" id="deleteFile">Удалить файл</button></div><div class="code-layout"><div class="filelist"><h3>Файлы проекта</h3><div id="fileList"></div></div><div><div class="toolbar"><input id="filePath" class="field" placeholder="путь/к/файлу.txt"><button class="btn" id="saveFile">Сохранить файл</button></div><textarea id="editor" class="editor" spellcheck="false" placeholder="Выбери файл или создай новый…"></textarea><div class="card" style="margin-top:12px"><h3>Создать коммит</h3><div class="toolbar"><input class="field" id="commitMessage" placeholder="Что изменилось? Например: Добавил главную страницу"><button class="btn primary" id="commitBtn">✓ Зафиксировать</button></div><small class="muted">Коммит сохраняет снимок файлов в локальной истории этого браузера.</small></div></div></div></section>
+<section class="view" id="view-history"><div class="heading"><div><h1>История коммитов</h1><p>Контрольные точки локальных репозиториев.</p></div></div><div id="historyList"></div></section>
+<section class="view" id="view-explore"><div class="heading"><div><h1>Обзор GitHub</h1><p>Поиск публичных репозиториев через GitHub API.</p></div></div><form class="searchrow" id="githubSearch"><input id="githubQuery" class="field" placeholder="Например: vite, game engine, python"><button class="btn primary">Искать на GitHub ↗</button></form><div id="githubResults" style="margin-top:18px"><div class="empty">Введи тему или название, чтобы найти публичные репозитории.</div></div><p class="muted" style="font-size:12px">Результаты загружаются с api.github.com. Поиск зависит от доступности GitHub и лимитов API.</p></section>
+<section class="view" id="view-import"><div class="heading"><div><h1>Импорт и экспорт</h1><p>Переноси локальные проекты между браузерами с помощью JSON-архива.</p></div></div><div class="grid2"><div class="card"><h3>Экспортировать</h3><p class="muted">Скачать все локальные репозитории и их историю одним JSON-файлом.</p><button class="btn primary" id="exportAll">Скачать резервную копию</button></div><div class="card"><h3>Импортировать</h3><p class="muted">Восстановить репозитории из JSON-файла Orbit Git.</p><input type="file" id="importFile" accept=".json,application/json" class="field"><button class="btn" id="importBtn" style="margin-top:10px">Импортировать файл</button></div></div><div class="notice"></div></section>
+<section class="view" id="view-about"><div class="heading"><div><h1>О проекте</h1><p>Orbit Git — собственная интерфейсная Git-мастерская.</p></div></div><div class="card"><h3>Что работает в этой версии</h3><p>Создание локальных репозиториев, редактирование файлов, снимки коммитов, просмотр истории, JSON-резервные копии и поиск публичных репозиториев GitHub.</p><h3 style="margin-top:22px">Честно о возможностях</h3><p class="muted">GitHub Pages не запускает серверный Git и не может безопасно хранить GitHub-токен. Поэтому коммиты этой версии хранятся в localStorage на устройстве, а не отправляются в удалённый Git-репозиторий. Для настоящих push/pull, клонирования и совместной работы нужен серверный backend или авторизация через GitHub App/OAuth.</p><h3 style="margin-top:22px">Сохранность</h3><p class="muted">Исходный проект Comp сохранён в ветке <code>backup/comp-original</code>. Данные Orbit Git находятся в хранилище браузера: экспортируй резервную копию, если они важны.</p><a class="btn" href="https://github.com/arshinovseva13-ux/Comp/tree/backup/comp-original">Открыть резервную ветку</a></div></section>
 </div>
-
+</main></div>
+<div id="toast" class="toast" hidden></div>
 <script>
-    // --- DOM элементы ---
-    const codeEditor = document.getElementById('codeEditor');
-    const previewFrame = document.getElementById('previewFrame');
-    const runBtn = document.getElementById('runBtn');
-    const downloadBtn = document.getElementById('downloadBtn');
-    const editorLabel = document.getElementById('editorLabel');
-    const liveStatus = document.getElementById('liveStatus');
-
-    // --- Режимы ---
-    let currentMode = 'integrated';   // 'integrated', 'html', 'css', 'js'
-    
-    // Хранилище отдельных частей (для режимов раздельной разработки)
-    let separateHTML = `<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Моя страница</title>
-    <style>
-        body {
-            font-family: system-ui, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e9eef5 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-        }
-        .card {
-            background: rgba(255,255,255,0.9);
-            backdrop-filter: blur(4px);
-            border-radius: 2rem;
-            padding: 2rem;
-            box-shadow: 0 20px 35px rgba(0,0,0,0.1);
-            text-align: center;
-            max-width: 500px;
-            border: 1px solid rgba(255,255,255,0.5);
-        }
-        h1 { color: #1e3c72; }
-        button {
-            background: #2c5f8a;
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 40px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        button:hover {
-            background: #18435c;
-            transform: scale(1.02);
-        }
-        .counter {
-            margin-top: 20px;
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
-    <div class="card">
-        <h1>✨ Живая песочница ✨</h1>
-        <p>Редактируй HTML, CSS, JS раздельно или единым кодом!</p>
-        <button id="clickBtn">Нажми меня</button>
-        <div class="counter">Нажатий: <span id="countDisplay">0</span></div>
-    </div>
-    <script>
-        let count = 0;
-        const btn = document.getElementById('clickBtn');
-        const display = document.getElementById('countDisplay');
-        if(btn) {
-            btn.addEventListener('click', () => {
-                count++;
-                display.innerText = count;
-            });
-        }
-    <\/script>
-</body>
-</html>`;
-
-    let separateCSS = `/* Ваши стили CSS */
-body {
-    background: #eef2ff;
-    font-family: system-ui;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-}
-.preview-box {
-    background: white;
-    border-radius: 28px;
-    padding: 30px;
-    box-shadow: 0 20px 30px -10px rgba(0,0,0,0.2);
-    text-align: center;
-    max-width: 450px;
-}
-h2 {
-    color: #0f2b3d;
-}
-button {
-    background: #3b82f6;
-    border: none;
-    border-radius: 60px;
-    padding: 10px 24px;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.2s;
-}
-button:hover {
-    background: #2563eb;
-    transform: translateY(-2px);
-}
-`;
-
-    let separateJS = `// Ваш JavaScript код
-console.log("Привет из редактора JS!");
-function updateTime() {
-    const timeDiv = document.getElementById('timeMessage');
-    if(timeDiv) {
-        timeDiv.innerText = new Date().toLocaleTimeString();
-    }
-}
-// Простой пример: счётчик кликов + динамическое приветствие
-document.addEventListener('DOMContentLoaded', () => {
-    let clicks = 0;
-    const jsBtn = document.getElementById('jsActionBtn');
-    const counterSpan = document.getElementById('jsCounter');
-    if(jsBtn) {
-        jsBtn.addEventListener('click', () => {
-            clicks++;
-            if(counterSpan) counterSpan.innerText = clicks;
-            alert('Клик! Счёт: ' + clicks);
-        });
-    }
-    updateTime();
-    setInterval(updateTime, 1000);
-});
-`;
-
-    // Полноценный демо-код для целостного режима (интегрированный)
-    let integratedDemo = `<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Интегрированное приложение</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            background: linear-gradient(145deg, #1c1f2c, #2a2e3f);
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 1.5rem;
-        }
-        .glass-panel {
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(12px);
-            border-radius: 2rem;
-            padding: 2rem;
-            width: 100%;
-            max-width: 550px;
-            box-shadow: 0 25px 40px rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.2);
-            text-align: center;
-            transition: all 0.3s;
-        }
-        h1 {
-            font-size: 2.2rem;
-            background: linear-gradient(135deg, #FFE6B0, #FFB347);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            margin-bottom: 0.5rem;
-        }
-        p {
-            color: #ddd;
-            margin-bottom: 1.5rem;
-        }
-        button {
-            background: #f97316;
-            border: none;
-            padding: 12px 26px;
-            border-radius: 60px;
-            font-weight: bold;
-            color: white;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: 0.2s;
-            margin: 6px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
-        button:hover {
-            background: #ea580c;
-            transform: scale(0.98);
-        }
-        .counter-area {
-            margin-top: 25px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 40px;
-            padding: 12px;
-            color: #FFE6B0;
-            font-weight: bold;
-            font-size: 1.4rem;
-        }
-        footer {
-            margin-top: 20px;
-            font-size: 0.75rem;
-            color: #aaa;
-        }
-    </style>
-</head>
-<body>
-    <div class="glass-panel">
-        <h1>🚀 Компилятор ONE</h1>
-        <p>HTML + CSS + JS в едином коде. Работает мгновенно!</p>
-        <button id="actionButton">Нажми на меня 🌟</button>
-        <div class="counter-area">
-            🔥 Счётчик кликов: <span id="clickValue">0</span>
-        </div>
-        <footer>← можно менять код | скачать как .html</footer>
-    </div>
-    <script>
-        let clicks = 0;
-        const btn = document.getElementById('actionButton');
-        const counterSpan = document.getElementById('clickValue');
-        if(btn) {
-            btn.addEventListener('click', () => {
-                clicks++;
-                counterSpan.innerText = clicks;
-                // анимация
-                btn.style.transform = 'scale(0.95)';
-                setTimeout(() => { if(btn) btn.style.transform = ''; }, 150);
-            });
-        }
-        console.log("Полноценный компилятор готов!");
-    <\/script>
-</body>
-</html>`;
-
-    // --- вспомогательные функции ---
-    function getCurrentFullHTML() {
-        if (currentMode === 'integrated') {
-            return codeEditor.value;
-        } 
-        else if (currentMode === 'html') {
-            // в режиме HTML: используем текущий HTML как основу + CSS и JS вставляем внутрь?
-            // Но правильнее: собираем полноценный документ с обёрткой:
-            let htmlContent = codeEditor.value;
-            // добавим стили и скрипты если они не пустые
-            if (separateCSS.trim() !== "") {
-                // если в htmlContent уже есть <style>? вставим перед </head>
-                if (htmlContent.toLowerCase().includes('</head>')) {
-                    htmlContent = htmlContent.replace('</head>', `<style>\n${separateCSS}\n</style>\n</head>`);
-                } else if (htmlContent.toLowerCase().includes('<body')) {
-                    htmlContent = htmlContent.replace('<body', `<style>\n${separateCSS}\n</style>\n<body`);
-                } else {
-                    htmlContent = `<style>${separateCSS}</style>\n${htmlContent}`;
-                }
-            }
-            if (separateJS.trim() !== "") {
-                // вставить script перед </body>
-                if (htmlContent.toLowerCase().includes('</body>')) {
-                    htmlContent = htmlContent.replace('</body>', `<script>\n${separateJS}\n<\/script>\n</body>`);
-                } else {
-                    htmlContent = htmlContent + `<script>\n${separateJS}\n<\/script>`;
-                }
-            }
-            return htmlContent;
-        }
-        else if (currentMode === 'css') {
-            // Создаем базовую HTML структуру, только CSS и JS
-            let baseHtml = `<!DOCTYPE html>
-<html>
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>CSS + JS Песочница</title><style>${codeEditor.value}</style></head>
-<body>
-<div class="demo-wrapper" style="padding:2rem; text-align:center; font-family:sans-serif;">
-    <div class="card-example" style="background:white; border-radius:1.5rem; padding:2rem; max-width:500px; margin:auto; box-shadow:0 8px 20px rgba(0,0,0,0.1);">
-        <h2>✨ Живой CSS-компилятор ✨</h2>
-        <p>Твой CSS применяется выше, а JS ниже — интерактивность</p>
-        <button id="cssDemoBtn">Проверить JS</button>
-        <p id="cssMessage">Нажми кнопку</p>
-    </div>
-</div>
-<script>${separateJS}<\/script>
-<script>
-    // дополнительная инициализация если кнопка существует
-    document.getElementById('cssDemoBtn')?.addEventListener('click', () => {
-        document.getElementById('cssMessage').innerText = 'JS работает! Стили активны ✔️';
-    });
-<\/script>
-</body>
-</html>`;
-            return baseHtml;
-        }
-        else if (currentMode === 'js') {
-            // режим JS: базовая HTML + встроенный стиль + пользовательский JS
-            let htmlWithJs = `<!DOCTYPE html>
-<html>
-<head><meta charset="UTF-8"><title>JavaScript редактор</title><style>
-    body { background: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: monospace; }
-    .js-card { background: #1e293b; color: #cbd5e6; padding: 30px; border-radius: 2rem; text-align: center; box-shadow: 0 15px 30px rgba(0,0,0,0.3); }
-    button { background: #0f172a; border: 1px solid #38bdf8; color: white; padding: 8px 18px; border-radius: 40px; margin: 8px; cursor: pointer; }
-</style></head>
-<body>
-<div class="js-card">
-    <h3>⚡ JavaScript-код (динамика)</h3>
-    <p id="dynamicText">Нажми кнопку и измени меня</p>
-    <button id="jsDemoExec">Исполнить JS логику</button>
-</div>
-<script>
-    // пользовательский скрипт
-    ${codeEditor.value}
-    // дополнительная привязка демо
-    document.getElementById('jsDemoExec')?.addEventListener('click', () => {
-        const txt = document.getElementById('dynamicText');
-        if(txt) txt.innerText = '✅ JS-код сработал! Дата: ' + new Date().toLocaleTimeString();
-    });
-<\/script>
-</body>
-</html>`;
-            return htmlWithJs;
-        }
-        return integratedDemo;
-    }
-
-    // Рендер (обновление iframe)
-    function renderPreview() {
-        try {
-            let fullHtml = getCurrentFullHTML();
-            // проверка на пустоту
-            if (!fullHtml.trim()) fullHtml = "<h1 style='color:red;'>⚠️ Пустой код, вставьте разметку</h1>";
-            // Запись в iframe
-            const doc = previewFrame.contentDocument || previewFrame.contentWindow.document;
-            doc.open();
-            doc.write(fullHtml);
-            doc.close();
-            liveStatus.innerHTML = "✅ обновлено " + new Date().toLocaleTimeString();
-        } catch(e) {
-            liveStatus.innerHTML = "❌ ошибка рендера";
-            console.error(e);
-        }
-    }
-
-    // Загрузка содержимого редактора в зависимости от режима
-    function loadEditorByMode() {
-        if (currentMode === 'integrated') {
-            codeEditor.value = integratedDemo;
-            editorLabel.innerText = "📄 Целостный HTML / CSS / JS (полный документ)";
-        } else if (currentMode === 'html') {
-            codeEditor.value = separateHTML;
-            editorLabel.innerText = "🏷️ Только HTML (CSS и JS будут добавлены автоматически)";
-        } else if (currentMode === 'css') {
-            codeEditor.value = separateCSS;
-            editorLabel.innerText = "🎨 Только CSS (авто-обёртка + JS из хранилища)";
-        } else if (currentMode === 'js') {
-            codeEditor.value = separateJS;
-            editorLabel.innerText = "📜 Только JavaScript (авто-базовый HTML/CSS)";
-        }
-        liveStatus.innerHTML = "режим изменён";
-    }
-
-    // Сохранить изменения в соответствующих хранилищах при редактировании (когда пользователь меняет код)
-    function syncCurrentCodeToStorage() {
-        const currentCode = codeEditor.value;
-        if (currentMode === 'integrated') {
-            integratedDemo = currentCode;
-        } else if (currentMode === 'html') {
-            separateHTML = currentCode;
-        } else if (currentMode === 'css') {
-            separateCSS = currentCode;
-        } else if (currentMode === 'js') {
-            separateJS = currentCode;
-        }
-    }
-
-    // Обработчик переключения вкладок
-    const tabBtns = document.querySelectorAll('.tab-btn');
-    tabBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            // синхронизируем текущий код перед сменой
-            syncCurrentCodeToStorage();
-            const mode = btn.getAttribute('data-mode');
-            currentMode = mode;
-            // обновляем активный класс
-            tabBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            // загружаем редактор соответственно новому режиму
-            loadEditorByMode();
-            // сразу рендерим предпросмотр
-            renderPreview();
-        });
-    });
-
-    // Кнопка запуска (явное обновление)
-    runBtn.addEventListener('click', () => {
-        syncCurrentCodeToStorage();
-        renderPreview();
-        liveStatus.innerHTML = "🚀 запуск выполнен!";
-        setTimeout(() => {
-            if(liveStatus.innerHTML === "🚀 запуск выполнен!") 
-                liveStatus.innerHTML = "✅ готово";
-        }, 1200);
-    });
-
-    // Скачивание .html файла (целостный результат)
-    downloadBtn.addEventListener('click', () => {
-        syncCurrentCodeToStorage();
-        let finalHtml = getCurrentFullHTML();
-        if (!finalHtml.trim()) finalHtml = "<h1>Ошибка: пустой вывод</h1>";
-        const blob = new Blob([finalHtml], {type: 'text/html'});
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `compiled_${currentMode}_${Date.now()}.html`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-        liveStatus.innerHTML = "💾 скачан файл .html";
-        setTimeout(() => { if(liveStatus.innerHTML.includes("скачан")) liveStatus.innerHTML = "✅ готово"; }, 1500);
-    });
-
-    // автосохранение при вводе текста (потеря не страшна)
-    codeEditor.addEventListener('input', () => {
-        // синхронизация на лету
-        if (currentMode === 'integrated') integratedDemo = codeEditor.value;
-        else if (currentMode === 'html') separateHTML = codeEditor.value;
-        else if (currentMode === 'css') separateCSS = codeEditor.value;
-        else if (currentMode === 'js') separateJS = codeEditor.value;
-        // опционально авто-обновление можно раскомментить, но сделаем только по кнопке или тоже авто?
-        // задержка чтобы не фризить, но сделаем щадящее авто (для удобства)
-        // но лучше пользователь сам нажимает запуск, однако добавим «тихий» превью если нужно, но не обязательно
-        // по желанию раскомментируйте: 
-        // если хотите автообновление при печати — раскомментировать строку ниже:
-        // debouncedRender();
-    });
-
-    // для плавного автообновления (доп опция, но необязательно, так как есть кнопка Run)
-    let timeoutId;
-    function debouncedRender() {
-        if(timeoutId) clearTimeout(timeoutId);
-        timeoutId = setTimeout(() => {
-            renderPreview();
-        }, 500);
-    }
-    // По желанию раскомментить 2 строки ниже для моментального предпросмотра при печати — оно работает аккуратно
-    // codeEditor.addEventListener('input', () => { syncCurrentCodeToStorage(); debouncedRender(); });
-    // Но чтобы не сбивать с толку, явный запуск предпочтительнее. Оставим только кнопку, однако пользователь жмёт "запуск". 
-    // Для лучшего UX добавим, что при переключении режимов уже рендер. А при вводе - только кнопка.
-    // Но некоторые любят мгновенность - сделаем легкий авторефреш через 0.7 сек после остановки ввода.
-    codeEditor.addEventListener('input', () => {
-        syncCurrentCodeToStorage();
-        if(timeoutId) clearTimeout(timeoutId);
-        timeoutId = setTimeout(() => {
-            renderPreview();
-            liveStatus.innerHTML = "🔄 автообновление";
-        }, 700);
-    });
-    
-    // Инициализация
-    loadEditorByMode();
-    renderPreview();
+const KEY='orbit-git-workspace-v1';let data=load();let currentRepo=null;let currentFile=null;let toastTimer;
+function load(){try{const x=JSON.parse(localStorage.getItem(KEY)||'null');if(x&&Array.isArray(x.repos))return x}catch(e){}return {repos:[]}}
+function persist(){localStorage.setItem(KEY,JSON.stringify(data));renderAll()}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function notify(s){const t=document.getElementById('toast');t.textContent=s;t.hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.hidden=true,3000)}
+function activeRepo(){return data.repos.find(r=>r.id===currentRepo)||data.repos[0]||null}
+function goView(name){document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+name));document.querySelectorAll('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===name));const labels={home:'Обзор',repositories:'Репозитории',workspace:'Рабочая область',history:'История коммитов',explore:'Обзор GitHub',import:'Импорт / экспорт',about:'О проекте'};document.getElementById('crumbPage').textContent=labels[name]||name;if(name==='workspace')renderWorkspace();if(name==='history')renderHistory();if(name==='repositories')renderRepos()}
+document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>goView(b.dataset.view)));document.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>goView(b.dataset.goto)));
+document.getElementById('menuBtn').onclick=()=>{const v=prompt('Открыть раздел: home, repositories, workspace, history, explore, import, about');if(v&&document.getElementById('view-'+v))goView(v)};
+function createRepo(name){name=(name||'').trim();if(!name){notify('Введи название репозитория');return}if(data.repos.some(r=>r.name.toLowerCase()===name.toLowerCase())){notify('Такой локальный репозиторий уже есть');return}const r={id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),name,created:new Date().toISOString(),files:{'README.md':'# '+name+'\n\nМой проект, созданный в Orbit Git.\n'},commits:[]};data.repos.unshift(r);currentRepo=r.id;currentFile='README.md';persist();goView('workspace');notify('Локальный репозиторий создан')}
+document.getElementById('quickCreate').onclick=()=>createRepo(document.getElementById('quickRepoName').value);
+document.getElementById('quickRepoName').addEventListener('keydown',e=>{if(e.key==='Enter')createRepo(e.target.value)});
+document.getElementById('newRepo').onclick=()=>{const n=prompt('Название нового репозитория:');if(n)createRepo(n)};
+document.getElementById('newRepoTop').onclick=()=>{const n=prompt('Название нового репозитория:');if(n)createRepo(n)};
+function renderAll(){document.getElementById('repoCount').textContent=data.repos.length;document.getElementById('commitCount').textContent=data.repos.reduce((n,r)=>n+r.commits.length,0);document.getElementById('fileCount').textContent=activeRepo()?Object.keys(activeRepo().files).length:0;renderRepos();renderWorkspace();renderHistory()}
+function renderRepos(){const box=document.getElementById('repoList');if(!data.repos.length){box.innerHTML='<div class="empty">Пока нет локальных репозиториев. Создай первый через кнопку «＋ Новый».</div>';return}box.innerHTML=data.repos.map(r=>'<div class="repo"><div class="repo-icon">⑂</div><div class="repo-info"><b>'+esc(r.name)+'</b><small>'+Object.keys(r.files).length+' файлов · '+r.commits.length+' коммитов · создан '+new Date(r.created).toLocaleDateString()+'</small></div><span class="pill">LOCAL</span><div class="repo-actions"><button class="btn" data-open="'+r.id+'">Открыть</button><button class="btn" data-remove="'+r.id+'">Удалить</button></div></div>').join('');box.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>{currentRepo=b.dataset.open;currentFile=null;goView('workspace')});box.querySelectorAll('[data-remove]').forEach(b=>b.onclick=()=>removeRepo(b.dataset.remove))}
+function removeRepo(id){const r=data.repos.find(x=>x.id===id);if(!r||!confirm('Удалить локальный репозиторий «'+r.name+'» и его коммиты? Сначала экспортируй резервную копию, если нужно.'))return;data.repos=data.repos.filter(x=>x.id!==id);if(currentRepo===id){currentRepo=null;currentFile=null}persist();notify('Репозиторий удалён из этого браузера')}
+function renderWorkspace(){const sel=document.getElementById('repoSelect');const old=currentRepo;sel.innerHTML=data.repos.map(r=>'<option value="'+r.id+'">'+esc(r.name)+'</option>').join('');if(!data.repos.length){sel.innerHTML='<option value="">Нет репозиториев</option>';document.getElementById('fileList').innerHTML='<div class="empty">Сначала создай репозиторий.</div>';document.getElementById('editor').value='';document.getElementById('filePath').value='';document.getElementById('workspaceSubtitle').textContent='Создай проект, чтобы начать.';return}if(!data.repos.some(r=>r.id===old))currentRepo=data.repos[0].id;sel.value=currentRepo;const r=activeRepo();document.getElementById('workspaceSubtitle').textContent=r.name+' · '+Object.keys(r.files).length+' файлов';const names=Object.keys(r.files);if(!names.includes(currentFile))currentFile=names[0]||null;document.getElementById('fileList').innerHTML=names.length?names.map(n=>'<button class="fileitem '+(n===currentFile?'active':'')+'" data-file="'+esc(n)+'">▤ '+esc(n)+'</button>').join(''):'<div class="empty">Нет файлов. Добавь первый.</div>';document.querySelectorAll('[data-file]').forEach(b=>b.onclick=()=>{saveEditorSilently();currentFile=b.dataset.file;renderWorkspace()});document.getElementById('filePath').value=currentFile||'';document.getElementById('editor').value=currentFile?r.files[currentFile]||'':''}
+document.getElementById('repoSelect').onchange=e=>{saveEditorSilently();currentRepo=e.target.value;currentFile=null;renderWorkspace();renderAll()};
+function saveEditorSilently(){const r=activeRepo();const p=document.getElementById('filePath').value.trim();if(r&&currentFile&&p===currentFile)r.files[currentFile]=document.getElementById('editor').value}
+document.getElementById('addFile').onclick=()=>{const r=activeRepo();if(!r){notify('Создай репозиторий');return}const p=prompt('Путь и имя нового файла (например src/app.js):');if(!p)return;if(r.files[p]!==undefined){notify('Файл уже существует');return}r.files[p]='';currentFile=p;persist();goView('workspace')};
+document.getElementById('saveFile').onclick=()=>{const r=activeRepo(),old=currentFile,p=document.getElementById('filePath').value.trim();if(!r||!p){notify('Укажи путь к файлу');return}const value=document.getElementById('editor').value;if(old&&old!==p)delete r.files[old];r.files[p]=value;currentFile=p;persist();notify('Файл сохранён')};
+document.getElementById('deleteFile').onclick=()=>{const r=activeRepo();if(!r||!currentFile)return;if(!confirm('Удалить файл '+currentFile+'?'))return;delete r.files[currentFile];currentFile=null;persist();notify('Файл удалён')};
+document.getElementById('commitBtn').onclick=()=>{const r=activeRepo();if(!r){notify('Сначала создай репозиторий');return}saveEditorSilently();const msg=document.getElementById('commitMessage').value.trim();if(!msg){notify('Напиши сообщение коммита');return}const snapshot=JSON.parse(JSON.stringify(r.files));const previous=r.commits[0]?.files||{};if(JSON.stringify(snapshot)===JSON.stringify(previous)){notify('Нет изменений для коммита');return}r.commits.unshift({id:Math.random().toString(16).slice(2,10),message:msg,date:new Date().toISOString(),files:snapshot,count:Object.keys(snapshot).length});document.getElementById('commitMessage').value='';persist();notify('Коммит сохранён локально')};
+function renderHistory(){const box=document.getElementById('historyList');const all=data.repos.flatMap(r=>r.commits.map(c=>({...c,repo:r.name}))).sort((a,b)=>b.date.localeCompare(a.date));box.innerHTML=all.length?all.map(c=>'<div class="commit"><div class="commit-dot">✓</div><div><b>'+esc(c.message)+'</b><small>'+esc(c.repo)+' · '+new Date(c.date).toLocaleString()+' · '+c.count+' файлов · '+esc(c.id)+'</small><div style="margin-top:8px"><button class="btn" data-restore="'+esc(c.id)+'" data-repo="'+esc(data.repos.find(r=>r.name===c.repo)?.id||'')+'">Восстановить снимок</button></div></div></div>').join(''):'<div class="empty">История пока пуста. Измени файл и создай коммит.</div>';box.querySelectorAll('[data-restore]').forEach(b=>b.onclick=()=>{const r=data.repos.find(x=>x.id===b.dataset.repo),c=r?.commits.find(x=>x.id===b.dataset.restore);if(!r||!c||!confirm('Заменить текущие файлы снимком выбранного коммита?'))return;r.files=JSON.parse(JSON.stringify(c.files));currentRepo=r.id;currentFile=Object.keys(r.files)[0]||null;persist();goView('workspace');notify('Снимок восстановлен')})}
+document.getElementById('githubSearch').onsubmit=async e=>{e.preventDefault();const q=document.getElementById('githubQuery').value.trim();if(!q)return;const box=document.getElementById('githubResults');box.innerHTML='<div class="empty">Ищем репозитории…</div>';try{const res=await fetch('https://api.github.com/search/repositories?q='+encodeURIComponent(q)+'&sort=stars&per_page=15',{headers:{Accept:'application/vnd.github+json'}});if(!res.ok)throw new Error(res.status===403?'GitHub ограничил частоту запросов. Попробуй позже.':'GitHub API: '+res.status);const json=await res.json();if(!json.items.length){box.innerHTML='<div class="empty">Ничего не найдено. Попробуй другой запрос.</div>';return}box.innerHTML='<div class="muted" style="margin:14px 0">Найдено результатов: '+json.total_count.toLocaleString()+' · показаны первые '+json.items.length+'</div><div class="repo-list">'+json.items.map(r=>'<div class="repo"><div class="repo-icon">⑂</div><div class="repo-info"><b><a style="color:var(--text)" href="'+r.html_url+'" target="_blank" rel="noopener">'+esc(r.full_name)+'</a></b><small>'+esc(r.description||'Без описания')+'<br>★ '+r.stargazers_count+' · '+esc(r.language||'язык не указан')+'</small></div><button class="btn" data-import="'+esc(r.full_name)+'">Карточка ↗</button></div>').join('')+'</div>';box.querySelectorAll('[data-import]').forEach(b=>b.onclick=()=>window.open('https://github.com/'+b.dataset.import,'_blank','noopener'))}catch(err){box.innerHTML='<div class="empty">'+esc(err.message||'Не удалось подключиться к GitHub API.')+'<br>Проверь интернет и доступ к api.github.com.</div>'}};
+function download(name,text,type='application/json'){const blob=new Blob([text],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+function exportData(){download('orbit-git-backup-'+new Date().toISOString().slice(0,10)+'.json',JSON.stringify({format:'orbit-git-backup',version:1,exportedAt:new Date().toISOString(),data},null,2))}
+document.getElementById('exportAll').onclick=exportData;document.getElementById('exportTop').onclick=exportData;
+document.getElementById('importBtn').onclick=async()=>{const f=document.getElementById('importFile').files[0];if(!f){notify('Выбери JSON-файл');return}try{const x=JSON.parse(await f.text());const incoming=x.data;if(x.format!=='orbit-git-backup'||!incoming||!Array.isArray(incoming.repos))throw new Error('Это не резервная копия Orbit Git');if(!confirm('Импортировать '+incoming.repos.length+' репозиториев? Одноимённые проекты будут объединены с заменой.'))return;for(const r of incoming.repos){const i=data.repos.findIndex(a=>a.name===r.name);if(i>=0)data.repos[i]=r;else data.repos.push(r)}persist();notify('Импорт завершён')}catch(err){notify(err.message||'Не удалось импортировать файл')}};
+renderAll();
 </script>
-</body>
-</html>
+</body></html>
