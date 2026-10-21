@@ -1,0 +1,34 @@
+name: Build Claude Forge Android APK
+on:
+  push:
+    branches: [claude-forge]
+    paths: ['claude-forge/**', '.github/workflows/claude-forge-android.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: claude-forge
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: claude-forge/package.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: android-actions/setup-android@v3
+      - run: npm install
+      - run: npx cap add android
+      - run: npx cap sync android
+      - run: cd android && chmod +x gradlew && ./gradlew assembleDebug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: claude-forge-android-apk
+          path: claude-forge/android/app/build/outputs/apk/debug/*.apk
