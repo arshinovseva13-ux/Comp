@@ -1,0 +1,6 @@
+{
+  "appId": "app.claudeforge.mobile",
+  "appName": "Claude Forge",
+  "webDir": "public",
+  "server": { "androidScheme": "https" }
+}
