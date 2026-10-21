@@ -1,0 +1,15 @@
+import "dotenv/config";
+import express from "express";
+import path from "node:path";
+import os from "node:os";
+import { spawn } from "node:child_process";
+import { fileURLToPath } from "node:url";
+const here=path.dirname(fileURLToPath(import.meta.url)),root=path.resolve(here,".."),app=express();
+app.use(express.json({limit:"1mb"}));
+const workspace=path.resolve(process.env.WORKSPACE_DIR||path.join(root,"workspace"));
+const enabled=process.env.ENABLE_AGENT==="true";
+app.use(express.static(path.join(root,"public")));
+app.get("/api/status",(_q,r)=>r.json({app:"Claude Forge",enabled,apiKeyPresent:!!process.env.ANTHROPIC_API_KEY,workspace,platform:os.platform()}));
+app.get("/api/git/status",(_q,r)=>{const c=spawn("git",["status","--short","--branch"],{cwd:workspace,shell:false,windowsHide:true});let out="",err="";c.stdout.on("data",d=>out+=d);c.stderr.on("data",d=>err+=d);c.on("error",e=>r.status(500).json({error:e.message}));c.on("close",code=>{if(!r.headersSent)r.json({code,output:out||err||"No Git output"})})});
+app.post("/api/agent/run",async(q,r)=>{if(!enabled)return r.status(403).json({error:"Agent execution is disabled. Review SECURITY.md first."});if(!process.env.ANTHROPIC_API_KEY)return r.status(400).json({error:"Server API key is not configured"});const prompt=typeof q.body?.prompt==="string"?q.body.prompt.trim():"";if(!prompt||prompt.length>12000)return r.status(400).json({error:"Prompt must contain 1–12000 characters"});try{const {query}=await import("@anthropic-ai/claude-agent-sdk");const events=[];for await(const event of query({prompt,options:{cwd:workspace,maxTurns:10,permissionMode:"default",allowedTools:["Read","Edit","Write"]}})){if(event?.type==="assistant"||event?.type==="result")events.push(event)}r.json({ok:true,events})}catch(e){r.status(500).json({error:"Agent run failed. Verify current SDK docs, authentication and CLI setup.",detail:String(e?.message||e).slice(0,1000)})}});
+const port=Number(process.env.PORT||4173);app.listen(port,"127.0.0.1",()=>console.log("Claude Forge backend on http://127.0.0.1:"+port+"; workspace="+workspace));
