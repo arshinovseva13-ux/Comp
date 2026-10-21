@@ -24,6 +24,10 @@ jobs:
           distribution: temurin
           java-version: '21'
       - uses: android-actions/setup-android@v3
+      - name: Accept Android SDK licences and install build tools
+        run: |
+          yes | sdkmanager --licenses || true
+          sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
       - run: npm install
       - run: npx cap add android
       - run: npx cap sync android
@@ -32,3 +36,4 @@ jobs:
         with:
           name: claude-forge-android-apk
           path: claude-forge/android/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
