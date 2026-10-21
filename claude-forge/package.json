@@ -1,7 +1,7 @@
 {
   "name": "claude-forge",
-  "version": "0.1.0",
-  "description": "Browser-first AI coding workspace prototype",
+  "version": "0.2.0",
+  "description": "Browser-first AI coding workspace with a Claude API backend",
   "private": true,
   "type": "module",
   "main": "electron/main.cjs",
@@ -14,9 +14,11 @@
     "build:android": "cap sync android && cd android && gradlew.bat assembleDebug"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.79.0",
     "@anthropic-ai/claude-agent-sdk": "^0.1.0",
     "@capacitor/android": "^7.4.3",
     "@capacitor/core": "^7.4.3",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^5.1.0"
   },
