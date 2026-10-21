@@ -1,0 +1,36 @@
+{
+  "name": "claude-forge",
+  "version": "0.1.0",
+  "description": "Browser-first AI coding workspace prototype",
+  "private": true,
+  "type": "module",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "dev": "node server/index.js",
+    "start": "node server/index.js",
+    "desktop": "electron .",
+    "build:desktop": "electron-builder --win nsis --publish never",
+    "cap:sync": "cap sync",
+    "build:android": "cap sync android && cd android && gradlew.bat assembleDebug"
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.1.0",
+    "@capacitor/android": "^7.4.3",
+    "@capacitor/core": "^7.4.3",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.4.3",
+    "electron": "^36.4.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "app.claudeforge.desktop",
+    "productName": "Claude Forge",
+    "directories": { "output": "dist" },
+    "files": ["public/**/*", "server/**/*", "electron/**/*", "package.json", "node_modules/**/*", ".env.example", "SECURITY.md"],
+    "win": { "target": ["nsis"] },
+    "nsis": { "oneClick": false, "allowToChangeInstallationDirectory": true }
+  }
+}
