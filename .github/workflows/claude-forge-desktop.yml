@@ -1,0 +1,27 @@
+name: Build Claude Forge Windows EXE
+on:
+  push:
+    branches: [claude-forge]
+    paths: ['claude-forge/**', '.github/workflows/claude-forge-desktop.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: claude-forge
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: claude-forge/package.json
+      - run: npm install
+      - run: npm run build:desktop
+      - uses: actions/upload-artifact@v4
+        with:
+          name: claude-forge-windows
+          path: claude-forge/dist/*
