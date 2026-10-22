@@ -19,6 +19,27 @@ body.light .nav,body.light .foot{border-color:#1b2a4b20}body.light .stat,body.li
 .forge-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:18px}.forge-head h2{margin:6px 0;font-size:clamp(26px,4vw,38px);letter-spacing:-1.3px}
 .forge-actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.forge-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.forge-editors{display:grid;gap:10px}.forge-field{border:1px solid var(--line);border-radius:13px;overflow:hidden;background:#080c18}.forge-field label{display:block;padding:8px 12px;background:#171d34;color:#c4b5fd;font-size:11px;font-weight:850;letter-spacing:1px}.forge-field textarea{display:block;width:100%;min-height:115px;resize:vertical;border:0;outline:none;padding:12px;background:transparent;color:#e8edff;font:12px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;tab-size:2}.forge-field:first-child textarea{min-height:180px}.forge-preview{width:100%;height:100%;min-height:440px;border:1px solid var(--line);border-radius:13px;background:white}.forge-meta{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:11px;margin-top:12px}.forge-status{color:#a7f3d0}.forge-btn{border:1px solid #3a4568;background:#171d34;color:var(--text);border-radius:10px;padding:9px 12px;font-weight:750;cursor:pointer}.forge-btn.primary{background:linear-gradient(100deg,#a78bfa,#67e8f9);color:#101224;border:0}.forge-btn:hover{filter:brightness(1.12)}body.light .forge{background:#ffffffc9;border-color:#cbd3eb}body.light .forge-field{background:#f8faff}body.light .forge-field label{background:#eef2ff;color:#4c3c91}body.light .forge-field textarea{color:#17203a}body.light .forge-btn{background:#eef2ff;color:#17203a;border-color:#cbd3eb}@media(max-width:800px){.forge-grid{grid-template-columns:1fr}.forge-preview{min-height:360px}.forge-head{display:block}}
 
+
+/* NEXORA quick-access module cards */
+.launcher{margin:8px 0 70px}
+.launcher-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:17px}
+.launcher-head h2{margin:5px 0 0;font-size:clamp(24px,3vw,34px);letter-spacing:-1px}
+.launcher-head p{margin:0;color:var(--muted);font-size:12px}
+.launcher-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.launch-card{display:flex;align-items:flex-start;gap:13px;min-width:0;padding:17px;border:1px solid var(--line);border-radius:17px;background:linear-gradient(145deg,#151a2edb,#0e1222e8);transition:transform .18s,border-color .18s,background .18s;position:relative;overflow:hidden}
+a.launch-card:hover{transform:translateY(-3px);border-color:#9b8af5;background:#1b2038}
+.launch-icon{flex:0 0 43px;width:43px;height:43px;border-radius:13px;display:grid;place-items:center;background:#a78bfa20;border:1px solid #a78bfa35;font-size:21px}
+.launch-copy{min-width:0;flex:1}
+.launch-copy h3{font-size:15px;margin:1px 0 4px}
+.launch-copy p{font-size:11px;line-height:1.5;color:var(--muted);margin:0 0 9px}
+.launch-status{display:inline-flex;align-items:center;gap:5px;font-size:9px;text-transform:uppercase;letter-spacing:.7px;border:1px solid #6ee7b744;border-radius:99px;padding:4px 7px;color:#a7f3d0}
+.launch-status.planned{border-color:#fbbf2444;color:#fcd34d}
+.launch-arrow{color:var(--muted);font-size:18px;margin-left:auto;align-self:center}
+.launch-card.planned{background:#11152888;border-style:dashed;opacity:.88}
+body.light .launch-card{background:#ffffffd9;border-color:#cbd3eb}body.light a.launch-card:hover{background:#f2f0ff;border-color:#9b8af5}
+@media(max-width:800px){.launcher-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.launcher-head{display:block}.launcher-head p{margin-top:7px}}
+@media(max-width:520px){.launcher-grid{grid-template-columns:1fr}.launch-card{padding:14px}.launcher{margin-bottom:50px}}
+
 </style>
 </head>
 <body>
@@ -28,7 +49,20 @@ body.light .nav,body.light .foot{border-color:#1b2a4b20}body.light .stat,body.li
 <div class="hero-copy"><span class="eyebrow"><i class="pulse"></i> Больше, чем платформа</span><h1>Одна среда.<br><span class="gradient">Без границ.</span></h1><p class="lead">NEXORA — концепция глобальной цифровой экосистемы, в которой искусственный интеллект, создание технологий, знания и цифровые пространства работают как части единого целого.</p><div class="actions"><a class="btn primary" href="#pillars">Исследовать экосистему <span>↗</span></a><a class="btn" href="#roadmap">План развития ↓</a></div><p class="note">Амбициозная концепция, развиваемая поэтапно. Сейчас это интерактивная демонстрационная платформа, а не готовая замена существующим технологическим компаниям.</p></div>
 <div class="orbit" aria-label="Схема взаимосвязанных направлений"><div class="ring"></div><div class="ring r2"></div><div class="ring r3"></div><div class="core">N</div><div class="sat s1">✦</div><div class="sat s2">⌘</div><div class="sat s3">◈</div><div class="sat s4">◎</div></div>
 </section>
+
 <div class="stats"><div class="stat"><b>01</b><span>единое ядро</span></div><div class="stat"><b>∞</b><span>направления роста</span></div><div class="stat"><b>API-first</b><span>открытая интеграция</span></div><div class="stat"><b>Human-first</b><span>человек в центре</span></div></div>
+<section class="launcher" id="quick-access"><div class="launcher-head"><div><div class="kicker">Быстрый доступ</div><h2>Твоё пространство NEXORA</h2></div><p>Переходи к нужному инструменту без долгой прокрутки.</p></div>
+<div class="launcher-grid">
+<a class="launch-card" href="#desk"><span class="launch-icon">▦</span><span class="launch-copy"><h3>NEXORA Desk</h3><p>Проекты, задачи и заметки в одном месте.</p><span class="launch-status">● Доступно</span></span><span class="launch-arrow">↗</span></a>
+<a class="launch-card" href="#forge"><span class="launch-icon">⌘</span><span class="launch-copy"><h3>NEXORA Forge</h3><p>Пиши код, запускай предпросмотр и сохраняй HTML.</p><span class="launch-status">● Доступно</span></span><span class="launch-arrow">↗</span></a>
+<a class="launch-card" href="#core"><span class="launch-icon">◈</span><span class="launch-copy"><h3>NEXORA Core</h3><p>Поиск, статистика и резервные копии.</p><span class="launch-status">● Доступно</span></span><span class="launch-arrow">↗</span></a>
+<a class="launch-card" href="#updates"><span class="launch-icon">↻</span><span class="launch-copy"><h3>История обновлений</h3><p>Что уже добавлено и что планируется дальше.</p><span class="launch-status">● Доступно</span></span><span class="launch-arrow">↗</span></a>
+<a class="launch-card" href="#architecture"><span class="launch-icon">⌘</span><span class="launch-copy"><h3>Архитектура</h3><p>Как связаны ядро, инструменты и интеграции.</p><span class="launch-status">● Доступно</span></span><span class="launch-arrow">↗</span></a>
+<a class="launch-card" href="#roadmap"><span class="launch-icon">✦</span><span class="launch-copy"><h3>Дорожная карта</h3><p>Следующие этапы развития экосистемы.</p><span class="launch-status">● Доступно</span></span><span class="launch-arrow">↗</span></a>
+<a class="launch-card planned" href="#pillars"><span class="launch-icon">✧</span><span class="launch-copy"><h3>NEXORA Intelligence</h3><p>Локальные интеллектуальные инструменты — следующий этап.</p><span class="launch-status planned">◷ В разработке</span></span><span class="launch-arrow">↗</span></a>
+<a class="launch-card planned" href="#pillars"><span class="launch-icon">◉</span><span class="launch-copy"><h3>NEXORA World</h3><p>Цифровые пространства и интерактивные миры.</p><span class="launch-status planned">◷ В планах</span></span><span class="launch-arrow">↗</span></a>
+<a class="launch-card planned" href="#pillars"><span class="launch-icon">▣</span><span class="launch-copy"><h3>NEXORA OS</h3><p>Единый интерфейс приложений и настроек.</p><span class="launch-status planned">◷ В планах</span></span><span class="launch-arrow">↗</span></a>
+</div></section>
 <section id="pillars"><div class="section-head"><div><div class="kicker">Экосистема</div><h2>Шесть миров. Одна система.</h2></div><p>Каждое направление полезно само по себе, но максимальная ценность появляется, когда сервисы взаимодействуют друг с другом.</p></div>
 <div class="grid">
 <article class="card" style="--glow:#a78bfa"><div class="icon">✦</div><h3>NEXORA Intelligence</h3><p>ИИ-ассистенты, агенты, анализ документов и единый интерфейс для подключения разных моделей.</p><span class="tag">AI & agents</span></article>
